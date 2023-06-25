@@ -1,4 +1,73 @@
-#info {
-    width: 80%;
+.accordion_info {
+    width: 70%;
+    margin: 0 auto;
+    color: aqua;
+}
+
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+    background-color: #212529 !important;
+}
+
+#heading {
+    color: white;
     text-align: center;
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+#subheading {
+    color: wheat;
+    font-style: italic;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.accordion-button {
+    font-size: 18px !important;
+    border-radius: 20px;
+    background-color: #0399ff!important;
+}
+
+.accordion-button:focus {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.img-fluid {
+    margin: 5px auto;
+    scale: 0.9;
+    border-radius: 20px;
+}
+
+.accordion-item {
+    border-radius: 20px;
+    border: none !important;
+    margin: 20px 0;
+}
+
+a[rel="image-source"] > p {
+    text-align: end;
+    margin: 10px 10px;
+}
+
+#img-title {
+    font-weight: 300;
+}
+
+.new-img {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.btn-outline-secondary {
+    font-size: 20px !important;
+    color: white !important;
+}
+
+.login_btn {
+    position: fixed;
+    top: 40px;
+    right: 80px;
 }
