@@ -3,6 +3,7 @@ import data from './keys.json';
 import '../App.css'
 import axios from "axios";
 import { Accordion, Image, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 
 function RandomDate() {
@@ -60,6 +61,9 @@ export default function ImageGenerator() {
     return (
         <div className="accordion_info">
             <h1 id="img-title">{resp.title}</h1>
+            <Link to="/login" className="login_btn">
+                <Button>Login</Button>
+            </Link>
             <Image src={resp.hdurl} fluid onMouseMove={
                 function (event) {
                     // Get the boundaries
@@ -98,6 +102,9 @@ export default function ImageGenerator() {
             <div className="new-img">
                 <Button variant="outline-secondary" onClick={fetchImage}>Generate new image</Button>
             </div>
+            <h4 id="subheading">A captivating image of the Universe!</h4>
+            <h4 id="subheading">Take a look at the eternal beauty of the cosmos and its marvels</h4>
+            <a href="https://apod.nasa.gov/apod/archivepix.html" rel="image-source" target="_blank"><p>Image Source</p></a>
         </div>
     );
 }

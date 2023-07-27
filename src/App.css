@@ -4,9 +4,17 @@
     color: aqua;
 }
 
+.accordion-header {
+    background-color: #0399ff;
+}
+
+.accordion-button[aria-expanded="true"] {
+    background-color: #0399ff;
+}
+
 body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
-    background-color: #212529 !important;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: #212529;
 }
 
 #heading {
@@ -24,14 +32,14 @@ body {
 }
 
 .accordion-button {
-    font-size: 18px !important;
+    font-size: 18px;
     border-radius: 20px;
-    background-color: #0399ff!important;
+    background-color: #0399ff;
 }
 
 .accordion-button:focus {
-    border: none !important;
-    box-shadow: none !important;
+    border: none;
+    box-shadow: none;
 }
 
 .img-fluid {
@@ -42,7 +50,7 @@ body {
 
 .accordion-item {
     border-radius: 20px;
-    border: none !important;
+    border: none;
     margin: 20px 0;
 }
 
@@ -62,12 +70,51 @@ a[rel="image-source"] > p {
 }
 
 .btn-outline-secondary {
-    font-size: 20px !important;
-    color: white !important;
+    font-size: 20px;
+    color: white;
 }
 
 .login_btn {
     position: fixed;
     top: 40px;
     right: 80px;
+}
+
+.login_btn {
+    position: absolute;
+    right: 40px;
+    top: 50px;
+}
+
+.login_methods {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-width: 300px;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.popup_btn {
+    background-color: white;
+    color: black ;
+    border: none;
+}
+
+.popup_btn > img {
+    padding-right: 20px;
+    margin: 5px 0px;
+}
+
+.popup_btn:hover {
+    background-color: white;
+    color: black;
+    box-shadow: inset 0px 0px 15px hsl(0, 10%, 10%);
+}
+
+.popup_btn:active {
+    background-color: white !important;
+    color: black !important;
+    box-shadow: inset 0px 0px 15px hsl(0, 10%, 10%);
 }
