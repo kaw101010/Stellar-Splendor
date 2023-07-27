@@ -5,7 +5,6 @@ import axios from "axios";
 import { Accordion, Image, Button } from "react-bootstrap";
 import { Link,  useNavigate } from "react-router-dom";
 import { signOut, getAuth } from "firebase/auth";
-import Login from "./Login.jsx";
 
 function RandomDate() {
     let begin = new Date(2015, 0, 1); // Date when NASA started posting the picture of the day
@@ -18,7 +17,7 @@ function RandomDate() {
     return date_str.join('-');
 }
 
-export default function ImageGenerator({isLoggedIn, user}) {
+export default function ImageGenerator({user, setUser}) {
     const [resp, setResp] = useState(null);
     const nav = useNavigate();
     // Call function to get the random date
@@ -40,7 +39,7 @@ export default function ImageGenerator({isLoggedIn, user}) {
       };
     
       useEffect(() => {
-        fetchImage(); // Call the API on component mount
+        fetchImage(); // Call the API
       }, []);
 
     if (!resp) {
@@ -76,6 +75,7 @@ export default function ImageGenerator({isLoggedIn, user}) {
                     e.preventDefault()
                     const auth = getAuth();
                     signOut(auth).then(() => {
+                        setUser(null);
                         nav("/");
                     }).catch((error) => {
                         console.log(error)
@@ -91,7 +91,7 @@ export default function ImageGenerator({isLoggedIn, user}) {
     return (
         <div className="accordion_info">
             <h1 id="img-title">{resp.title}</h1>
-            {isLoggedIn ? showUserProfile() : LoginBtn()}
+            {user ? showUserProfile() : LoginBtn()}
             <Image src={resp.hdurl} fluid onMouseMove={
                 function (event) {
                     // Get the boundaries
