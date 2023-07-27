@@ -3,8 +3,9 @@ import data from './keys.json';
 import '../App.css'
 import axios from "axios";
 import { Accordion, Image, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-
+import { Link,  useNavigate } from "react-router-dom";
+import { signOut, getAuth } from "firebase/auth";
+import Login from "./Login.jsx";
 
 function RandomDate() {
     let begin = new Date(2015, 0, 1); // Date when NASA started posting the picture of the day
@@ -17,9 +18,9 @@ function RandomDate() {
     return date_str.join('-');
 }
 
-export default function ImageGenerator() {
+export default function ImageGenerator({isLoggedIn, user}) {
     const [resp, setResp] = useState(null);
-
+    const nav = useNavigate();
     // Call function to get the random date
     const fetchImage = () => {
         let newDate = RandomDate();
@@ -58,12 +59,39 @@ export default function ImageGenerator() {
         )
     }
 
-    return (
-        <div className="accordion_info">
-            <h1 id="img-title">{resp.title}</h1>
+
+    const LoginBtn = () => {
+        return (
             <Link to="/login" className="login_btn">
                 <Button>Login</Button>
             </Link>
+        )
+    }
+
+    const showUserProfile = () => {
+        return (
+            <>
+                <Button size="lg" variant="outline-secondary"
+                onClick={(e) => {
+                    e.preventDefault()
+                    const auth = getAuth();
+                    signOut(auth).then(() => {
+                        nav("/");
+                    }).catch((error) => {
+                        console.log(error)
+                    });
+                }}>
+                    Logout
+                </Button>
+                <img src={user.photoURL} height={"50px"} ></img>
+            </>
+        );
+        }
+
+    return (
+        <div className="accordion_info">
+            <h1 id="img-title">{resp.title}</h1>
+            {isLoggedIn ? showUserProfile() : LoginBtn()}
             <Image src={resp.hdurl} fluid onMouseMove={
                 function (event) {
                     // Get the boundaries
