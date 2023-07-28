@@ -33,13 +33,18 @@ body {
 
 .accordion-button {
     font-size: 18px;
-    border-radius: 20px;
     background-color: #0399ff;
 }
 
 .accordion-button:focus {
     border: none;
     box-shadow: none;
+}
+
+#src_link {
+    display: block;
+    text-align: end;
+    margin-bottom: 20px;
 }
 
 .img-fluid {
@@ -75,15 +80,32 @@ a[rel="image-source"] > p {
 }
 
 .login_btn {
-    position: fixed;
-    top: 40px;
-    right: 80px;
+    position: absolute;
+    top: 50px;
+    right: 150px;
 }
 
-.login_btn {
+.login_btn > button {
     position: absolute;
-    right: 40px;
-    top: 50px;
+    background-color: #EE4266;
+    border: 2px solid #212529;
+    padding: 5px 20px;
+}
+
+.video_media {
+    margin: 30px 0px;
+}
+
+#login_link:hover {
+    background-color: white;
+    color: #EE4266;
+    border: 2px solid #EE4266;
+}
+
+#login_link:focus {
+    background-color: white;
+    color: #EE4266;
+    border: 2px solid #EE4266;
 }
 
 .login_methods {
@@ -117,4 +139,47 @@ a[rel="image-source"] > p {
     background-color: white !important;
     color: black !important;
     box-shadow: inset 0px 0px 15px hsl(0, 10%, 10%);
+}
+
+#user_icon {
+    margin-bottom: 5px;
+    margin-right: 10px;
+}
+
+.menu_btn:hover {
+    background-color: hsl(0, 10%, 88%);
+}
+
+.menu_btn {
+    font-size: 16px;
+    padding-right: 30px;
+}
+
+.menu_btn:active {
+    color: #212529;
+}
+
+.menu_dropdown {
+    position: absolute;
+    right: 40px;
+    top: 50px;
+}
+
+.menu_dropdown > button {
+    background-color: #EE4266;
+    border: none;    
+}
+
+.menu_dropdown > button:active {
+    background-color: #EE4266;
+    border: none;
+}
+
+.menu_dropdown > button:focus {
+    background-color: #EE4266 !important;
+}
+
+.menu_dropdown > button:not(:focus) {
+    background-color: #EE4266;
+    border: none;
 }
