@@ -28,6 +28,7 @@ const Login = ({user, setUser}) => {
                             const token = credential.accessToken;
                             const userProfile = result.user;
                             setUser(userProfile);
+                            console.log(userProfile.displayName);
                             nav("/");
                         }).catch((error) => {
                             const errorCode = error.code;

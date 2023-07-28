@@ -183,3 +183,25 @@ a[rel="image-source"] > p {
     background-color: #EE4266;
     border: none;
 }
+
+.user_profile {
+    display: flex;
+    width: 70%;
+    flex-direction: column;
+    margin: 20px auto;
+}
+
+.user_profile > img {
+    height: 100px;
+    width: 100px;
+    margin: 0 auto;
+}
+
+.user_profile > h1 {
+    margin: 30px auto;
+    padding-top: 30px;
+}
+
+.profile_name {
+    color: white;
+}

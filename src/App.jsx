@@ -1,10 +1,11 @@
 import React from "react";
 import ImageGenerator from "./Components/Image.jsx"
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Login from "./Components/Login.jsx";
 import { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
 import app from "./Components/firebaseInit.jsx";
+import UserProfile from "./Components/Profile.jsx";
 
 export default function App() {
 
@@ -31,6 +32,8 @@ export default function App() {
           <Routes>
             <Route path="/" element= {<ImageGenerator user={user} setUser={setUser} />} />
             <Route path="/login" element = {<Login user={user} setUser={setUser} />} />
+            <Route path="/my-profile" element = {user ? <UserProfile user={user} /> : <Navigate to={"/"} />} />
+            <Route path="/*" element = {<Navigate to={"/"} /> } />
           </Routes>
       </BrowserRouter>
     </>

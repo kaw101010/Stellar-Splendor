@@ -77,7 +77,7 @@ export default function ImageGenerator({user, setUser}) {
             className="menu_dropdown"
             >
                 <Dropdown.Item eventKey="1" className="menu_btn" >&#10084;&#65039; Liked Images</Dropdown.Item>
-                <Dropdown.Item eventKey="2" className="menu_btn" ><img src={user_icon} alt="user icon" height={"20px"} id="user_icon" />My profile</Dropdown.Item>
+                <Dropdown.Item eventKey="2" className="menu_btn" href="/my-profile" ><img src={user_icon} alt="user icon" height={"20px"} id="user_icon" />My profile</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item eventKey="4" className="menu_btn"
                 onClick={(e) => {
@@ -110,8 +110,8 @@ export default function ImageGenerator({user, setUser}) {
 
                     event.target.style.transform = `
                     perspective(1000px)
-                    rotateY(${-offsetX *7}deg)
-                    rotateX(${-offsetY * 7}deg)
+                    rotateY(${-offsetX *6}deg)
+                    rotateX(${-offsetY *6}deg)
                     scale3d(1, 1, 1)`;
                 }
             }
