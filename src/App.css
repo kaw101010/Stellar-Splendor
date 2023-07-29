@@ -186,22 +186,40 @@ a[rel="image-source"] > p {
 
 .user_profile {
     display: flex;
-    width: 70%;
+    width: 40%;
     flex-direction: column;
     margin: 20px auto;
 }
 
 .user_profile > img {
-    height: 100px;
-    width: 100px;
-    margin: 0 auto;
+    height: 130px;
+    width: 130px;
+    margin: 30px auto;
+    box-shadow: 0 5px 20px hsl(0, 50%, 4%);
 }
 
 .user_profile > h1 {
-    margin: 30px auto;
-    padding-top: 30px;
+    margin: 10px auto;
+}
+
+.user_profile > p {
+    margin: 20px auto;
+    color: white;
+    font-size: 20px;
 }
 
 .profile_name {
     color: white;
+}
+
+#account-linked-error {
+    width: 30%;
+    margin: 0 auto;
+}
+
+.profile_back {
+    border: none;
+    position: absolute;
+    top: 80px;
+    left: 50px;
 }

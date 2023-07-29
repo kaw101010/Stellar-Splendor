@@ -110,8 +110,8 @@ export default function ImageGenerator({user, setUser}) {
 
                     event.target.style.transform = `
                     perspective(1000px)
-                    rotateY(${-offsetX *6}deg)
-                    rotateX(${-offsetY *6}deg)
+                    rotateY(${-offsetX *5}deg)
+                    rotateX(${-offsetY *5}deg)
                     scale3d(1, 1, 1)`;
                 }
             }

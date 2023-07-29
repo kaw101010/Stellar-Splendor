@@ -12,7 +12,7 @@ export default function App() {
   const [user, setUser] = useState(null);
 
   const auth = getAuth(app);
-  {/* Listener to keep track of user status */}
+  /* Listener to keep track of user status */
   useEffect(() => {
     const authChange = auth.onAuthStateChanged((usr) => {
       if (usr) {
@@ -32,7 +32,7 @@ export default function App() {
           <Routes>
             <Route path="/" element= {<ImageGenerator user={user} setUser={setUser} />} />
             <Route path="/login" element = {<Login user={user} setUser={setUser} />} />
-            <Route path="/my-profile" element = {user ? <UserProfile user={user} /> : <Navigate to={"/"} />} />
+            <Route path="/my-profile" element = { {user} ? <UserProfile user={user} /> : <Navigate to={"/"} />} />
             <Route path="/*" element = {<Navigate to={"/"} /> } />
           </Routes>
       </BrowserRouter>
