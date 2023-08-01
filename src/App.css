@@ -49,7 +49,7 @@ body {
 
 .img-fluid {
     margin: 5px auto;
-    scale: 0.9;
+    scale: 0.8;
     border-radius: 20px;
 }
 
@@ -222,4 +222,27 @@ a[rel="image-source"] > p {
     position: absolute;
     top: 80px;
     left: 50px;
+}
+
+.like_icon {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+
+.like_icon:hover {
+    cursor: pointer;
+}
+
+.liked_icon {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+
+.liked_icon:hover {
+    cursor: pointer;
+    transition-timing-function: ease-in-out;
+    transition-duration: 300ms;
+    transition-delay: 200ms;
 }

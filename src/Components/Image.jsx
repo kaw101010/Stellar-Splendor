@@ -6,6 +6,9 @@ import { Accordion, Image, Button, Dropdown, DropdownButton } from "react-bootst
 import { Link,  useNavigate } from "react-router-dom";
 import { signOut, getAuth } from "firebase/auth";
 import user_icon from "../assets/person.svg";
+import star_icon from "../assets/star-icon.svg";
+import like_icon from "../assets/star-icon-clicked.svg";
+import { getDatabase, ref, update, remove } from "firebase/database";
 
 function RandomDate() {
     let begin = new Date(2015, 0, 1); // Date when NASA started posting the picture of the day
@@ -18,14 +21,30 @@ function RandomDate() {
     return date_str.join('-');
 }
 
+function GenerateImageID() {
+    // Function to generate a unique ID for every image
+    const date = new Date();
+    const randString ="img" + date.getMilliseconds().toString() + Math.random().toString(21).replace(".", "");
+    // Pad the string to get a random string of 21 characters
+    return randString.padEnd(21, "a");
+}
+
 export default function ImageGenerator({user, setUser}) {
     const [resp, setResp] = useState(null);
     const nav = useNavigate();
+    const [liked, isLiked] = useState(false);
+
+    const UserRegEmail = user?.email; // User email
+
+    // Random ID for every image that is generated
+    const [randomID, setRandomID] = useState(GenerateImageID());
     // Call function to get the random date
     const fetchImage = () => {
+        isLiked(false);
         let newDate = RandomDate();
         const apiUrl = `${data.ApiUrl}?api_key=${data.ApiKey}&date=${newDate}`;
-        
+
+        setRandomID(GenerateImageID());
         axios.get(apiUrl)
           .then((response) => {
             if (response.status === 200) {
@@ -76,7 +95,7 @@ export default function ImageGenerator({user, setUser}) {
             id="dropdown-menu-align-end"
             className="menu_dropdown"
             >
-                <Dropdown.Item eventKey="1" className="menu_btn" >&#10084;&#65039; Liked Images</Dropdown.Item>
+                <Dropdown.Item eventKey="1" className="menu_btn" ><Image src={like_icon} height={"18px"} /> Liked Images</Dropdown.Item>
                 <Dropdown.Item eventKey="2" className="menu_btn" href="/my-profile" ><img src={user_icon} alt="user icon" height={"20px"} id="user_icon" />My profile</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item eventKey="4" className="menu_btn"
@@ -130,6 +149,43 @@ export default function ImageGenerator({user, setUser}) {
             <iframe src={resp.url} height={"500px"} width={"800px"} className="video_media" ></iframe>
         )
     })
+    
+    const db = getDatabase();
+
+    const ImageLiked = () => {
+        // Create a reference to the database
+        const bucket = UserRegEmail.replace(/[@#.]/g, "*");
+        console.log(randomID);
+        const media_url = (resp.media_type === "image" ? resp.hdurl : resp.url );
+        // Add image to user account
+        console.log("users/" + bucket + "/" + randomID);
+        update(ref(db, "users/" + bucket + "/" + randomID), {
+            media_url,
+        });
+        isLiked(true);
+    }
+
+    const ImageNotLiked = () => {
+        // Remove impermissible characters
+        const bucket = UserRegEmail.replace(/[@#.]/g, "*");
+        const UserRef = ref(db, "users/" + bucket + "/" + randomID);
+        console.log("users/" + bucket + "/" + randomID);
+        // Remove image from user account
+        remove(UserRef);
+        isLiked(false);
+    }
+
+    const LikeBtn = (({src}) => {
+        return (
+            <Image src={src} height={"70px"} alt="like icon" className="like_icon" onClick={ImageLiked} />
+        );
+    });
+
+    const LikedBtn = (({src}) => {
+        return (
+            <Image src={src} height={"70px"} alt="liked icon" className="liked_icon" onClick={ImageNotLiked} />
+        )
+    });
 
     return (
             <div className="accordion_info">
@@ -138,6 +194,7 @@ export default function ImageGenerator({user, setUser}) {
                 {/* If the media is an image, render it using Image attribute.
                     If media is a video, display the video*/}
                 { resp.media_type === "image" ? <GeneratedImg /> : <GeneratedVid /> }
+                {liked ? <LikedBtn src={like_icon} /> : <LikeBtn src={star_icon} /> }
                 <Accordion defaultActiveKey={['0']} alwaysOpen>
                     <Accordion.Item eventKey="0">
                         <Accordion.Header><strong>Description of the image</strong></Accordion.Header>
