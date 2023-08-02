@@ -246,3 +246,31 @@ a[rel="image-source"] > p {
     transition-duration: 300ms;
     transition-delay: 200ms;
 }
+
+.card {
+    margin: 50px auto;
+    width: 800px;
+    border: none;
+}
+
+.card-title {
+    font-size: 2rem;
+}
+
+.liked_image {
+    height: 600px;
+}
+
+.unlike_image {
+    margin: 10px 0;
+    margin-top: 20px;
+}
+
+.desc_liked_image {
+    margin: 10px 20px;
+    margin-top: 20px;
+}
+
+.unlike_image:active {
+    border: none;
+}

@@ -7,6 +7,8 @@ import github_icon from "../assets/github-icon.svg";
 import { useEffect, useState } from "react";
 
 const AccountLinkedError = () => {
+    // Function that shows alert message to user
+    // Error message is that user already has an account with google and is trying to login with Github
     return (
         <Alert variant="danger" dismissible={true} id="account-linked-error">
             <Alert.Heading>Please sign in with Google!</Alert.Heading>
@@ -29,16 +31,19 @@ const Login = ({user, setUser}) => {
         <>
             { linkedAccount ? <AccountLinkedError /> : null}
             <nav className="login_methods">
+                {/* User can login with Google or Github */}
                     <Button variant="outline-primary" className="popup_btn" size="lg" onClick={(e) => {
                         e.preventDefault()
+                        
+                        // Login with Google
                         const provider = new GoogleAuthProvider();
+                        // Allow user to select account to log in
                         provider.setCustomParameters({prompt: "select_account"});
                         const auth = getAuth(app);
                             signInWithPopup(auth, provider)
                             .then((result) => {
                                 const userProfile = result.user;
                                 setUser(userProfile);
-                                console.log(userProfile.displayName);
                                 nav("/");
                             }).catch((error) => {
                                 console.log(error);
@@ -59,6 +64,8 @@ const Login = ({user, setUser}) => {
                                 }).catch((error) => {
                                     console.log(error);
                                     const email = error.customData.email
+                                    // Check if user does not already have an account with google.
+                                    // If user already has an account, show error message
                                     fetchSignInMethodsForEmail(auth, email)
                                     .then((methods) => {
                                         if (methods.includes("google.com")) {

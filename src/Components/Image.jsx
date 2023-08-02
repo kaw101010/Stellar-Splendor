@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import data from './keys.json';
-import '../App.css'
+import data from "./keys.json";
+import "../App.css";
 import axios from "axios";
 import { Accordion, Image, Button, Dropdown, DropdownButton } from "react-bootstrap";
 import { Link,  useNavigate } from "react-router-dom";
@@ -18,8 +18,8 @@ function RandomDate() {
           Math.random() * (end.getTime() - begin.getTime()),
       );
     let date_str = [date.getFullYear().toString(),(date.getMonth() + 1).toString(), date.getDate().toString()];
-    return date_str.join('-');
-}
+    return date_str.join("-");
+};
 
 function GenerateImageID() {
     // Function to generate a unique ID for every image
@@ -137,7 +137,7 @@ export default function ImageGenerator({user, setUser}) {
             
             onMouseLeave={
                 (event) => {
-                    event.target.style.transform = 'none';
+                    event.target.style.transform = "none";
                 }
             } />
         )
@@ -156,14 +156,17 @@ export default function ImageGenerator({user, setUser}) {
         // Function to add image to liked images in user account
         // Create a reference to the database
         const bucket = UserRegEmail.replace(/[@#.]/g, "*");
-        console.log(randomID);
         const media_url = (resp.media_type === "image" ? resp.hdurl : resp.url );
         const media_type = resp.media_type;
+        const media_title = resp.title;
+        const media_description = resp.explanation || "There is no description";
         // Add image to user account
-        console.log("users/" + bucket + "/" + randomID);
         update(ref(db, "users/" + bucket + "/" + randomID), {
             media_url,
             media_type,
+            media_title,
+            randomID,
+            media_description,
         });
         isLiked(true);
     }
@@ -173,7 +176,6 @@ export default function ImageGenerator({user, setUser}) {
         // Remove impermissible characters
         const bucket = UserRegEmail.replace(/[@#.]/g, "*");
         const UserRef = ref(db, "users/" + bucket + "/" + randomID);
-        console.log("users/" + bucket + "/" + randomID);
         // Remove image from user account
         remove(UserRef);
         isLiked(false);

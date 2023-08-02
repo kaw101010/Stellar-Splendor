@@ -14,7 +14,7 @@ const Profile = (({userImage, userName, userEmail}) => {
 });
 
 const UserProfile = (({user}) => {
-    let username=null;
+    let username="";
     {/* Add case if user has no display name.
     Github provider might not provide a displayName, 
     so a screenName is being used instead */}
