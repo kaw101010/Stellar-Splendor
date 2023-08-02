@@ -95,7 +95,7 @@ export default function ImageGenerator({user, setUser}) {
             id="dropdown-menu-align-end"
             className="menu_dropdown"
             >
-                <Dropdown.Item eventKey="1" className="menu_btn" ><Image src={like_icon} height={"18px"} /> Liked Images</Dropdown.Item>
+                <Dropdown.Item eventKey="1" className="menu_btn" href="/liked-images" ><Image src={like_icon} height={"18px"} /> Liked Images</Dropdown.Item>
                 <Dropdown.Item eventKey="2" className="menu_btn" href="/my-profile" ><img src={user_icon} alt="user icon" height={"20px"} id="user_icon" />My profile</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item eventKey="4" className="menu_btn"
@@ -153,19 +153,23 @@ export default function ImageGenerator({user, setUser}) {
     const db = getDatabase();
 
     const ImageLiked = () => {
+        // Function to add image to liked images in user account
         // Create a reference to the database
         const bucket = UserRegEmail.replace(/[@#.]/g, "*");
         console.log(randomID);
         const media_url = (resp.media_type === "image" ? resp.hdurl : resp.url );
+        const media_type = resp.media_type;
         // Add image to user account
         console.log("users/" + bucket + "/" + randomID);
         update(ref(db, "users/" + bucket + "/" + randomID), {
             media_url,
+            media_type,
         });
         isLiked(true);
     }
 
     const ImageNotLiked = () => {
+        // Function to remove image from liked images in user account
         // Remove impermissible characters
         const bucket = UserRegEmail.replace(/[@#.]/g, "*");
         const UserRef = ref(db, "users/" + bucket + "/" + randomID);

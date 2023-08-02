@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
 import app from "./Components/firebaseInit.jsx";
 import UserProfile from "./Components/Profile.jsx";
+import RetrieveImages from "./Components/LikedImages.jsx";
 
 export default function App() {
 
@@ -21,7 +22,7 @@ export default function App() {
         setUser(null);
       }
     })
-    return (() => authChange);
+    return () => authChange;
   }, []);
 
   return (
@@ -32,8 +33,9 @@ export default function App() {
           <Routes>
             <Route path="/" element= {<ImageGenerator user={user} setUser={setUser} />} />
             <Route path="/login" element = {<Login user={user} setUser={setUser} />} />
-            <Route path="/my-profile" element = { {user} ? <UserProfile user={user} /> : <Navigate to={"/"} />} />
-            <Route path="/*" element = {<Navigate to={"/"} /> } />
+            <Route path="/my-profile" element = { {user} ? <UserProfile user={user} /> : Navigate(to="/")} />
+            <Route path="/liked-images" element = { {user} ? <RetrieveImages user={user} /> : Navigate(to="/") } />
+            <Route path="/*" element = { Navigate(to="/") } />
           </Routes>
       </BrowserRouter>
     </>
