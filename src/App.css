@@ -274,3 +274,9 @@ a[rel="image-source"] > p {
 .unlike_image:active {
     border: none;
 }
+
+.modal-header {
+    background-color: #2d2f32;
+    color:hsl(0, 10%, 88%);
+    border: none;
+}

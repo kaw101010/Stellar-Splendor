@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import data from "./keys.json";
 import "../App.css";
 import axios from "axios";
-import { Accordion, Image, Button, Dropdown, DropdownButton } from "react-bootstrap";
+import { Accordion, Image, Button, Dropdown, DropdownButton, Modal, Alert } from "react-bootstrap";
 import { Link,  useNavigate } from "react-router-dom";
 import { signOut, getAuth } from "firebase/auth";
 import user_icon from "../assets/person.svg";
@@ -33,6 +33,12 @@ export default function ImageGenerator({user, setUser}) {
     const [resp, setResp] = useState(null);
     const nav = useNavigate();
     const [liked, isLiked] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
+
+    const handleClose = () => {
+        // Function to show modal alert if user is not logged in and clicks on like button
+        setShowAlert(false);
+    }
 
     const UserRegEmail = user?.email; // User email
 
@@ -85,7 +91,7 @@ export default function ImageGenerator({user, setUser}) {
                 <Button id="login_link">Login</Button>
             </Link>
         )
-    }
+    };
 
     const UserMenu = () => {
         return (
@@ -153,9 +159,15 @@ export default function ImageGenerator({user, setUser}) {
     const db = getDatabase();
 
     const ImageLiked = () => {
+
+        if (!user) {
+            setShowAlert(true);
+            return;
+        }
+
         // Function to add image to liked images in user account
         // Create a reference to the database
-        const bucket = UserRegEmail.replace(/[@#.]/g, "*");
+        const bucket = UserRegEmail?.replace(/[@#.]/g, "*");
         const media_url = (resp.media_type === "image" ? resp.hdurl : resp.url );
         const media_type = resp.media_type;
         const media_title = resp.title;
@@ -174,7 +186,7 @@ export default function ImageGenerator({user, setUser}) {
     const ImageNotLiked = () => {
         // Function to remove image from liked images in user account
         // Remove impermissible characters
-        const bucket = UserRegEmail.replace(/[@#.]/g, "*");
+        const bucket = UserRegEmail?.replace(/[@#.]/g, "*");
         const UserRef = ref(db, "users/" + bucket + "/" + randomID);
         // Remove image from user account
         remove(UserRef);
@@ -183,13 +195,13 @@ export default function ImageGenerator({user, setUser}) {
 
     const LikeBtn = (({src}) => {
         return (
-            <Image src={src} height={"70px"} alt="like icon" className="like_icon" onClick={ImageLiked} />
+            <Image src={src} height={"70px"} alt="like icon" className="like_icon" role="like button" onClick={ImageLiked} />
         );
     });
 
     const LikedBtn = (({src}) => {
         return (
-            <Image src={src} height={"70px"} alt="liked icon" className="liked_icon" onClick={ImageNotLiked} />
+            <Image src={src} height={"70px"} alt="liked icon" className="liked_icon" role="dislike button" onClick={ImageNotLiked} />
         )
     });
 
@@ -197,6 +209,13 @@ export default function ImageGenerator({user, setUser}) {
             <div className="accordion_info">
                 <h1 id="img-title">{resp.title}</h1>
                 {user ? <UserMenu /> : LoginBtn()}
+                {showAlert && 
+                // Show alert if user is not logged in and tries to like any media
+                <Modal show={showAlert} onHide={handleClose}>
+                    <Modal.Header>
+                        Please Log In
+                    </Modal.Header>
+                </Modal>}
                 {/* If the media is an image, render it using Image attribute.
                     If media is a video, display the video*/}
                 { resp.media_type === "image" ? <GeneratedImg /> : <GeneratedVid /> }
