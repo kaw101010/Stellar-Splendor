@@ -33,7 +33,6 @@ const CardGenerator = ({element, user}) => {
                     // Remove image from user account
                     const db = getDatabase();
                     const bucket = user?.email.replace(/[#@.]/g, "*");
-                    console.log(element.randomID);
                     const UserRef = ref(db, "users/" + bucket + "/" + element.randomID);
                     remove(UserRef);
                 }}>Remove from Liked</Button>

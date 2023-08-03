@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import data from "./keys.json";
 import "../App.css";
 import axios from "axios";
-import { Accordion, Image, Button, Dropdown, DropdownButton, Modal, Alert } from "react-bootstrap";
+import { Accordion, Image, Button, Dropdown, DropdownButton, Modal } from "react-bootstrap";
 import { Link,  useNavigate } from "react-router-dom";
 import { signOut, getAuth } from "firebase/auth";
 import user_icon from "../assets/person.svg";
 import star_icon from "../assets/star-icon.svg";
 import like_icon from "../assets/star-icon-clicked.svg";
-import { getDatabase, ref, update, remove } from "firebase/database";
+import { getDatabase, ref, update, remove, get } from "firebase/database";
 
 function RandomDate() {
     let begin = new Date(2015, 0, 1); // Date when NASA started posting the picture of the day
@@ -35,9 +35,11 @@ export default function ImageGenerator({user, setUser}) {
     const [liked, isLiked] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
 
+    const [LikedObj, setLikedObj] = useState(false);
     const handleClose = () => {
         // Function to show modal alert if user is not logged in and clicks on like button
         setShowAlert(false);
+        setLikedObj(false);
     }
 
     const UserRegEmail = user?.email; // User email
@@ -145,21 +147,22 @@ export default function ImageGenerator({user, setUser}) {
                 (event) => {
                     event.target.style.transform = "none";
                 }
-            } />
+            } onError={fetchImage} />
         )
     });
 
 
     const GeneratedVid = (() => {
         return (
-            <iframe src={resp.url} height={"500px"} width={"800px"} className="video_media" ></iframe>
+            <div className="iframe_wrapper">
+                <iframe src={resp.url} height={"500px"} width={"800px"} className="video_media" ></iframe>
+            </div>
         )
     })
     
     const db = getDatabase();
 
-    const ImageLiked = () => {
-
+    const ImageLiked = async () => {
         if (!user) {
             setShowAlert(true);
             return;
@@ -172,15 +175,30 @@ export default function ImageGenerator({user, setUser}) {
         const media_type = resp.media_type;
         const media_title = resp.title;
         const media_description = resp.explanation || "There is no description";
-        // Add image to user account
-        update(ref(db, "users/" + bucket + "/" + randomID), {
-            media_url,
-            media_type,
-            media_title,
-            randomID,
-            media_description,
-        });
-        isLiked(true);
+        // Check if image has not already been liked by user
+        const snap = await get(ref(db, "users/" + bucket + "/"));
+        let search_flag = false; // Variable that checks if user has already liked an image
+        if (snap.exists()) {
+            const snapVals = Object.values(snap.val());
+            for (let i = 0; i < snapVals.length; i++) {
+                if (snapVals[i].media_title === media_title) {
+                    // Element has been liked by user before
+                    setLikedObj(true);
+                    search_flag = true;
+                    break;
+                }
+            }
+        }
+        if (!search_flag) {
+            update(ref(db, "users/" + bucket + "/" + randomID), {
+                media_url,
+                media_type,
+                media_title,
+                randomID,
+                media_description,
+            });
+            isLiked(true);
+        }
     }
 
     const ImageNotLiked = () => {
@@ -214,6 +232,13 @@ export default function ImageGenerator({user, setUser}) {
                 <Modal show={showAlert} onHide={handleClose}>
                     <Modal.Header>
                         Please Log In
+                    </Modal.Header>
+                </Modal>}
+                {// Show message if user tries to like an image that is already in user account
+                LikedObj && 
+                <Modal show={setLikedObj} onHide={handleClose}>
+                    <Modal.Header>
+                        You have already liked this image.
                     </Modal.Header>
                 </Modal>}
                 {/* If the media is an image, render it using Image attribute.
