@@ -316,3 +316,56 @@ a[rel="image-source"] > p {
         font-size: 15px;
     }
 }
+
+@media screen and (width < 1000px) {
+    .card {
+        max-width: 400px;
+        max-height: 550px;
+    }
+
+    .card > img {
+        max-height: 450px;
+        object-fit: cover;
+    }
+
+    .card-title {
+        font-size: 25px;
+    }
+}
+
+@media screen and (width < 450px) {
+    .profile_back {
+        position: sticky;
+        z-index: 10;
+        top: 10px;
+        font-size: 12px;
+        left: 10px;
+    }
+
+    .menu_dropdown {
+        position: fixed;
+        z-index: 10;
+        right: 10px;
+        top: 10px;
+    }
+
+    .menu_dropdown > button {
+        font-size: 12px;
+    }
+
+    .card {
+        max-width: 350px;
+        max-height: 500px;
+    }
+
+    .liked_image {
+        height: 250px;
+        object-fit: cover;
+    }
+
+    .desc_liked_image {
+        margin: 10px 0;
+        margin-top: 20px;
+        margin-left: 10px;
+    }
+}
