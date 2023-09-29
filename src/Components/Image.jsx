@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import data from "./keys.json";
 import "../App.css";
 import axios from "axios";
@@ -64,6 +64,7 @@ export default function ImageGenerator({user, setUser}) {
           .catch((error) => {
             console.log("Error", error);
           });
+          window.scrollTo(0,0);
       };
     
       useEffect(() => {
@@ -147,7 +148,7 @@ export default function ImageGenerator({user, setUser}) {
                 (event) => {
                     event.target.style.transform = "none";
                 }
-            } onError={fetchImage} />
+            } onError={fetchImage} alt="universe image" loading="lazy" height={"900px"} width={"1000px"} />
         )
     });
 
@@ -228,7 +229,7 @@ export default function ImageGenerator({user, setUser}) {
                 <h1 id="img-title">{resp.title}</h1>
                 {user ? <UserMenu /> : LoginBtn()}
                 {showAlert && 
-                // Show alert if user is not logged in and tries to like any media
+                // Show alert if user is not logged in and tries to like media
                 <Modal show={showAlert} onHide={handleClose}>
                     <Modal.Header>
                         Please Log In
@@ -247,7 +248,7 @@ export default function ImageGenerator({user, setUser}) {
                 {liked ? <LikedBtn src={like_icon} /> : <LikeBtn src={star_icon} /> }
                 <Accordion defaultActiveKey={['0']} alwaysOpen>
                     <Accordion.Item eventKey="0">
-                        <Accordion.Header><strong>Description of the image</strong></Accordion.Header>
+                        <Accordion.Header><strong>Description</strong></Accordion.Header>
                         <Accordion.Body>
                             {resp.explanation}
                         </Accordion.Body>

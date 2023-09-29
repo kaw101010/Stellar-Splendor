@@ -1,5 +1,5 @@
-import { getDatabase, get, ref, remove, set } from "firebase/database";
-import React, { useState, useEffect } from "react";
+import { getDatabase, get, ref, remove } from "firebase/database";
+import { useState, useEffect } from "react";
 import { Button, Card, Image, Offcanvas } from "react-bootstrap";
 import "../App.css";
 import { Link } from "react-router-dom";

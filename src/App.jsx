@@ -30,7 +30,7 @@ export default function App() {
 
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter basename="/">
             <h1 id="heading">Stellar Splendor</h1>
             <h4 id='subheading'>Explore the Cosmos</h4>
           <Routes>
