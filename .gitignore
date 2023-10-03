@@ -22,9 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# Api Keys are hidden
-src/Components/keys.json
-
-# Firebase Config is hidden
-src/Components/firebaseConfig.json 
