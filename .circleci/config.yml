@@ -25,17 +25,13 @@ jobs:
           destination: node-build
   deploy:
     # This is an example deploy job, not actually used by the workflow
-    docker:
-      - image: cimg/base:stable
     steps:
-      # Replace this with steps to deploy to users
       - run:
           name: deploy
-          command: '#e.g. ./deploy.sh'
+          command: |
+            npm install -g netlify-cli
+            netlify deploy --prod --dir=dist --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID
 workflows:
   build:
     jobs:
       - build-node
-    # - deploy:
-    #     requires:
-    #       - build-node
